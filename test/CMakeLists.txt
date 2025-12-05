@@ -1,6 +1,8 @@
 # define TESTDATADIR for tests that need input files
 add_definitions(-DTESTDATADIR="${CMAKE_SOURCE_DIR}/test/files/")
 
+include(UsePythonTest)
+
 # define FORMATDIR for location of format plugin binaries
 if(BINDINGS_ONLY)
   set(FORMATDIR "${OB_MODULE_PATH}/")
