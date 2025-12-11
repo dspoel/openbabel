@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 //#define WITH_DEPICTION 1
 
@@ -126,11 +127,14 @@ bool doShuffleTest(const std::string &smiles)
 
   std::string ref = canConv.WriteString(&mol, true); // FIXME
   cout << "ref = " << ref << endl;
+  
+  std::random_device rd;
+  std::mt19937 g(rd());
 
   bool result = true;
   for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+      std::shuffle(atoms.begin(), atoms.end(), g);
     mol.RenumberAtoms(atoms);
     // get can smiles
     std::string cansmi = canConv.WriteString(&mol, true);
@@ -168,11 +172,13 @@ bool doShuffleTestFile(const std::string &filename)
 
   std::string ref = canConv.WriteString(&mol, true); // FIXME
   cout << "ref = " << ref << endl;
+  std::random_device rd;
+  std::mt19937 g(rd());
 
   bool result = true;
   for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+      std::shuffle(atoms.begin(), atoms.end(), g);
     mol.RenumberAtoms(atoms);
 
     // get can smiles
@@ -202,6 +208,8 @@ bool doShuffleTestOnMultiFile(const std::string &filename)
   std::ifstream ifs;
   ifs.open(file.c_str());
   OB_REQUIRE( ifs );
+  std::random_device rd;
+  std::mt19937 g(rd());
 
   bool result = true;
   while (canConv.Read(&mol, &ifs)) {
@@ -217,7 +225,7 @@ bool doShuffleTestOnMultiFile(const std::string &filename)
     bool subresult = true;
     for (unsigned int i = 0; i < N; ++i) {
       // shuffle the atoms
-      std::random_shuffle(atoms.begin(), atoms.end());
+        std::shuffle(atoms.begin(), atoms.end(), g);
       mol.RenumberAtoms(atoms);
 
       // get can smiles

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 using std::cout;
 using std::endl;
@@ -31,6 +32,9 @@ int canonstabletest(int argc, char *argv[])
   OBConversion conv;
   conv.SetInFormat("smi");
   conv.SetOutFormat("can");
+  
+  std::random_device rd;
+  std::mt19937 g(rd());
 
   std::string line;
   while (std::getline(ifs, line)) {
@@ -42,7 +46,7 @@ int canonstabletest(int argc, char *argv[])
 
     for (int i = 0; i < 5; ++i) {
       // shuffle the atoms
-      std::random_shuffle(atoms.begin(), atoms.end());
+        std::shuffle(atoms.begin(), atoms.end(), g);
       mol.RenumberAtoms(atoms);
 
       // get can smiles

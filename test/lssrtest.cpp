@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 using namespace OpenBabel;
@@ -59,9 +60,11 @@ bool doShuffleTestMolecule(OBMol &mol)
   FOR_ATOMS_OF_MOL(atom, mol)
     atoms.push_back(&*atom);
   
+  std::random_device rd;
+  std::mt19937 g(rd());
   for (int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+      std::shuffle(atoms.begin(), atoms.end(), g);
     mol.RenumberAtoms(atoms);
     // get rings
     std::vector< std::vector<unsigned long> > rings = getIdRingPaths(mol);
