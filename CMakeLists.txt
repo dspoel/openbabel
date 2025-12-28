@@ -6,7 +6,7 @@ endif()
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
